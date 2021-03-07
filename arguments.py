@@ -4,6 +4,8 @@ def get_args():
     parser = argparse.ArgumentParser(description='VIPriors Segmentation baseline training script')
 
     # model architecture & checkpoint
+    parser.add_argument('--load',
+                        default=False, type=bool, help='whether to load from saved model')
     parser.add_argument('--model', metavar='[DeepLabv3_resnet50, DeepLabv3_resnet101, fcnet]',
                         default='fcnet', type=str, help='model')
     parser.add_argument('--train',
@@ -29,8 +31,8 @@ def get_args():
     parser.add_argument('--hflip', metavar='[True,False]', default=True,
                         type=float, help='data augmentation: random horizontal flip')
     parser.add_argument('--crop_size', default=[224, 224], nargs='+', type=int, help='data augmentation: random crop size')
-    parser.add_argument('--train_size', default=[480, 480], nargs='+', type=int, help='image size during training')
-    parser.add_argument('--test_size', default=[480, 480], nargs='+', type=int, help='image size during test')
+    parser.add_argument('--train_size', default=[120, 120], nargs='+', type=int, help='image size during training')
+    parser.add_argument('--test_size', default=[120, 120], nargs='+', type=int, help='image size during test')
     parser.add_argument('--dataset_mean', metavar='[0.485, 0.456, 0.406]',
                         default=[0.485, 0.456, 0.406], type=list,
                         help='mean for normalization')

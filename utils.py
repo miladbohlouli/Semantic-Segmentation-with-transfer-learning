@@ -4,7 +4,7 @@ import torch
 from PIL import ImageOps
 from torchvision import models
 from models import *
-
+import os
 
 def get_dataloader(dataset, args):
     # args = args
@@ -131,3 +131,9 @@ def get_device():
     else:
         device = torch.device("cpu")
     return device
+
+def save_model(save_dir, save_dict):
+    torch.save(save_dict, os.path.join(save_dir, "checkpoint.pt"))
+
+def load_model(save_dir):
+    return torch.load(os.path.join(save_dir, "checkpoint.pt"))
