@@ -51,13 +51,13 @@ def main():
         print(f"({epoch + 1}/{start_epoch + args.epochs}) ---> \ttrain_loss:{train_loss:.2f}, \tval_loss: {eval_loss:.2f}")
 
     # Saving the results
-    plt.plot(range(args.epochs), train_losses)
-    plt.plot(range(args.epochs), eval_losses)
+    plt.plot(range(epoch), train_losses)
+    plt.plot(range(epoch), eval_losses)
     plt.legend(["training loss", "validation loss"])
     plt.savefig(f"saved_results/loss_values_{epoch + 1}.png")
 
     plt.figure()
-    plt.plot(range(args.epochs), mean_ious)
+    plt.plot(range(epoch), mean_ious)
     plt.title("Mean IoU on the validation results")
     plt.savefig(f"saved_results/miou_values_{epoch + 1}.png")
 
