@@ -130,4 +130,5 @@ dmypy.json
 dataset/
 saved_results/
 *.ipynb
-
+.DS_Store
+.idea/
