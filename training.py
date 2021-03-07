@@ -30,8 +30,9 @@ def train_epoch(model, data_loader, optimizer, criterion, scheduler, device, arg
 
             # forward pass
             outputs = model(inputs)
-            outputs = outputs['out'].cpu()
+            outputs = outputs['out']
             preds = torch.argmax(outputs, 1)
+
             # cross-entropy loss
             loss = criterion(outputs, labels)
 
@@ -67,7 +68,7 @@ def eval_epoch(model, data_loader, criterion, class_labels, valid_labels, maskCo
             input_images = input_images.float().to(device)
             target_labels = target_labels.long().to(device)
 
-            outs = model(input_images)["out"].cpu()
+            outs = model(input_images)["out"]
             predicted_labels = torch.argmax(outs, dim=1)
 
             loss = criterion(outs, target_labels)
