@@ -18,6 +18,7 @@ def main():
     train_losses = []
     eval_losses = []
     mean_ious = []
+    nz_ious = []
 
     # Specify the device
     device = get_device()
@@ -34,6 +35,7 @@ def main():
         train_losses = list(saving_dict["train_losses"])
         eval_losses = list(saving_dict["eval_losses"])
         mean_ious = list(saving_dict["mean_ious"])
+        nz_ious = list(saving_dict["mean_nz_ious"])
 
     for epoch in range(start_epoch, start_epoch + args.epochs):
 
@@ -41,12 +43,13 @@ def main():
         train_loss = train_epoch(model, data_loader["train"], optimizer, criterion, scheduler, device, args)
 
         # validation step
-        mean_iou, eval_loss = eval_epoch(model, data_loader["val"], criterion, MiniCity.classLabels, MiniCity.validClasses,
+        mean_iou, nz_iou, eval_loss = eval_epoch(model, data_loader["val"], criterion, MiniCity.classLabels, MiniCity.validClasses,
                              MiniCity.mask_colors, epoch, args.save_path, device, args)
 
         train_losses.append(train_loss)
         eval_losses.append(eval_loss)
         mean_ious.append(mean_iou)
+        nz_ious.append(nz_iou)
 
         print(f"({epoch + 1}/{start_epoch + args.epochs}) ---> \ttrain_loss:{train_loss:.2f}, \tval_loss: {eval_loss:.2f}")
 
@@ -57,8 +60,10 @@ def main():
     plt.savefig(f"saved_results/loss_values_{epoch + 1}.png")
 
     plt.figure()
-    plt.plot(range(epoch+1), mean_ious)
+    plt.plot(range(epoch + 1), mean_ious)
+    plt.plot(range(epoch + 1), nz_ious)
     plt.title("Mean IoU on the validation results")
+    plt.legend(["All classes", "common classes"])
     plt.savefig(f"saved_results/miou_values_{epoch + 1}.png")
 
     saving_dict = {

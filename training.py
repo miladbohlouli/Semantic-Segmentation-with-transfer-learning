@@ -97,7 +97,7 @@ def eval_epoch(model, data_loader, criterion, class_labels, valid_labels, maskCo
                     pred = vislbl(predicted_labels[i, :, :], maskColors)
                     cv2.imwrite(folder + '/images/{}_epoch_{}.png'.format(filename, epoch), pred[:, :, ::-1])
 
-        mean_IoU = iou.outputScores()
-        return mean_IoU, np.mean(losses)
+        mean_IoU, nz_IoU = iou.outputScores()
+        return mean_IoU, nz_IoU, np.mean(losses)
 
 

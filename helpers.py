@@ -125,8 +125,7 @@ class iouCalc():
         outStr += '---------------------'
 
         print(outStr)
-
-        return miou
+        return miou, non_zerp_miou
 
 
 def printError(message):
