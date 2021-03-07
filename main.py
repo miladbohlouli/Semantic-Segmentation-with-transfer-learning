@@ -28,7 +28,7 @@ def main():
         train_loss = train_epoch(model, data_loader["train"], optimizer, criterion, scheduler, device, args)
 
         eval_loss, mean_iou = eval_epoch(model, data_loader["val"], criterion, MiniCity.classLabels, MiniCity.validClasses,
-                             MiniCity.mask_colors, epoch, args.save_path, args)
+                             MiniCity.mask_colors, epoch, args.save_path, device, args)
 
         print(f"({epoch}/{args.epochs}) ---> \ttrain_loss:{train_loss:.2f}, \tvalidation: {eval_loss:.2f}")
 
