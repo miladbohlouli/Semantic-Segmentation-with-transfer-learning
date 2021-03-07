@@ -14,8 +14,6 @@ def main():
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     criterion = nn.CrossEntropyLoss(ignore_index=MiniCity.voidClass)
-    for param in model.parameters():
-        print(param.requires_grad)
 
     print(model)
 
