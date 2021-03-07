@@ -54,12 +54,12 @@ def main():
     plt.plot(range(args.epochs), train_losses)
     plt.plot(range(args.epochs), eval_losses)
     plt.legend(["training loss", "validation loss"])
-    plt.savefig(f"saved_results/loss_values_{epoch}.png")
+    plt.savefig(f"saved_results/loss_values_{epoch + 1}.png")
 
     plt.figure()
     plt.plot(range(args.epochs), mean_iou)
     plt.title("Mean IoU on the validation results")
-    plt.savefig(f"saved_results/miou_values_{epoch}.png")
+    plt.savefig(f"saved_results/miou_values_{epoch + 1}.png")
 
     saving_dict = {
         "epoch": epoch,
