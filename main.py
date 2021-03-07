@@ -1,5 +1,5 @@
 from minicity import MiniCity
-from utils import get_dataloader, get_model
+from utils import get_dataloader, get_model, get_device
 from arguments import get_args
 from training import *
 import torch
@@ -19,10 +19,8 @@ def main():
 
     print(model)
 
-    if torch.cuda.is_available():
-        device = torch.device("gpu")
-    else:
-        device = torch.device("cpu")
+    # Specify the device
+    device = get_device()
     print(f"____Running the model on {device}___\n")
 
     print("____Training the model from scratch____") if args.train else print("___Fine tuning the model____")

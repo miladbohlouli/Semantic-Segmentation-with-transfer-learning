@@ -124,3 +124,10 @@ def get_model(Dataset, args):
     model.aux_classifier = FCNHead(1024, len(Dataset.validClasses))
 
     return model
+
+def get_device():
+    if torch.cuda.is_available():
+        device = torch.device("cuda:0")
+    else:
+        device = torch.device("cpu")
+    return device
