@@ -11,7 +11,7 @@ def main():
     args = get_args()
     model = get_model(MiniCity, args)
     data_loader = get_dataloader(MiniCity, args)
-    optimizer = torch.optim.Adam(model.parameters())
+    optimizer = torch.optim.SGD(model.parameters(), lr=args.lr_init, momentum=args.lr_momentum, weight_decay=args.lr_weight_decay)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.epochs)
     criterion = nn.CrossEntropyLoss(ignore_index=MiniCity.voidClass)
     start_epoch = 0
@@ -41,7 +41,7 @@ def main():
         train_loss = train_epoch(model, data_loader["train"], optimizer, criterion, scheduler, device, args)
 
         # validation step
-        eval_loss, mean_iou = eval_epoch(model, data_loader["val"], criterion, MiniCity.classLabels, MiniCity.validClasses,
+        mean_iou, eval_loss = eval_epoch(model, data_loader["val"], criterion, MiniCity.classLabels, MiniCity.validClasses,
                              MiniCity.mask_colors, epoch, args.save_path, device, args)
 
         train_losses.append(train_loss)
@@ -51,13 +51,13 @@ def main():
         print(f"({epoch + 1}/{start_epoch + args.epochs}) ---> \ttrain_loss:{train_loss:.2f}, \tval_loss: {eval_loss:.2f}")
 
     # Saving the results
-    plt.plot(range(epoch), train_losses)
-    plt.plot(range(epoch), eval_losses)
+    plt.plot(range(epoch+1), train_losses)
+    plt.plot(range(epoch+1), eval_losses)
     plt.legend(["training loss", "validation loss"])
     plt.savefig(f"saved_results/loss_values_{epoch + 1}.png")
 
     plt.figure()
-    plt.plot(range(epoch), mean_ious)
+    plt.plot(range(epoch+1), mean_ious)
     plt.title("Mean IoU on the validation results")
     plt.savefig(f"saved_results/miou_values_{epoch + 1}.png")
 

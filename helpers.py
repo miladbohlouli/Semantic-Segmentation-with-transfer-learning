@@ -118,8 +118,10 @@ class iouCalc():
             classScoreList.append(iouScore)
             outStr += '{:<14}: {:>5.3f}\n'.format(self.classLabels[c], iouScore)
         miou = getScoreAverage(classScoreList)
+        non_zerp_miou = np.mean(np.array(classScoreList)[np.where(classScoreList != 0)])
         outStr += '---------------------\n'
-        outStr += 'Mean IoU      : {avg:5.3f}\n'.format(avg=miou)
+        outStr += 'Mean IoU                     : {avg:5.3f}\n'.format(avg=miou)
+        outStr += 'Mean IoU for non-zero classes: {avg:5.3f}\n'.format(avg=non_zerp_miou)
         outStr += '---------------------'
 
         print(outStr)
