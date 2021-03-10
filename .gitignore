@@ -132,3 +132,4 @@ saved_results/
 *.ipynb
 .DS_Store
 .idea/
+*.pdf
